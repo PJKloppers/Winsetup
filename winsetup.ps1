@@ -50,9 +50,47 @@ if ($wshell.Popup("Do you want to install VS CODE ?",0,"Installer",4+32) -eq 6) 
     Start-Job -ScriptBlock { winget install XP9KHM4BK9FZ7Q -h --accept-package-agreements ----disable-interactivity }
 }
 
-# valve.steam
-if ($wshell.Popup("Do you want to install STEAM ?",0,"Installer",4+32) -eq 6) {
-    Start-Job -ScriptBlock { winget install valve.steam -h --accept-package-agreements ----disable-interactivity }
+
+#ENDNOTE
+if ($wshell.Popup("Do you want to install ENDNOTE ?",0,"Installer",4+32) -eq 6) {
+   
+    Start-Job -ScriptBlock { 
+        #download from https://download.endnote.com/downloads/21/EN21Inst.exe into $PWD
+        Invoke-WebRequest -Uri https://download.endnote.com/downloads/21/EN21Inst.exe -OutFile $PWD\EN21Inst.exe
+        # install
+        Start-Process -FilePath $PWD\EN21Inst.exe
+        # remove the installer
+        Remove-Item $PWD\EN21Inst.exe
+    }
+}
+
+# VESTA
+if ($wshell.Popup("Do you want to install VESTA to the Desktop?",0,"Installer",4+32) -eq 6) {
+    Start-Job -ScriptBlock {
+        # change dir to desktop
+        # check if $HOME/Desktop exists
+        if (Test-Path $HOME\Desktop) {
+            Set-Location $HOME\Desktop
+        }elseif (Test-Path $HOME\OneDrive\Desktop) {
+            Set-Location $HOME\OneDrive\Desktop
+        }else{
+            Write-Host "Desktop not found"
+            # Popup
+            $wshell.Popup("Desktop folder not found by this script",0,"Installer",0+16)
+            exit
+        }
+
+        Invoke-WebRequest -Uri https://jp-minerals.org/vesta/archives/3.5.8/VESTA-win64.zip -OutFile $PWD/vesta.zip
+        Expand-Archive -Path $PWD/vesta.zip -DestinationPath $PWD/vesta
+        Remove-Item $PWD/vesta.zip
+
+    }
+}
+
+
+#Google earth pro
+if ($wshell.Popup("Do you want to install Google Earth Pro ?",0,"Installer",4+32) -eq 6) {
+    Start-Job -ScriptBlock { winget install Google.EarthPro -h --accept-package-agreements ----disable-interactivity }
 }
 
 #MS OFFICE
