@@ -4,66 +4,42 @@ $wshell = New-Object -ComObject Wscript.Shell
 if ($wshell.Popup("Do you want to install Python3.12 ?",0,"Installer",4+32) -eq 6) {
     Start-Job -ScriptBlock { winget install Python.Python.3.12 --override "/passive InstallAllUsers=1 PrependPath=1 Include_test=0" }
 }
-
 # PowerToys
 if ($wshell.Popup("Do you want to install Powertoys ?",0,"Installer",4+32) -eq 6) {
     Start-Job -ScriptBlock { winget install XP89DCGQ3K6VLD -h --accept-package-agreements ----disable-interactivity }
 }
-
 # Google Chrome
 if ($wshell.Popup("Do you want to install GOOGLE CHROME ?",0,"Installer",4+32) -eq 6) {
     Start-Job -ScriptBlock { winget install Google.Chrome -h --accept-package-agreements ----disable-interactivity }
 }
-
 # Mobatek.MobaXterm
 if ($wshell.Popup("Do you want to install MOBAXTERM ?",0,"Installer",4+32) -eq 6) {
     Start-Job -ScriptBlock { install Mobatek.MobaXterm -h --accept-package-agreements ----disable-interactivity }
 }
-
 # Whatsapp
 if ($wshell.Popup("Do you want to install WhatsApp Desktop ?",0,"Installer",4+32) -eq 6) {
     Start-Job -ScriptBlock { winget install 9NKSQGP7F2NH -h --accept-package-agreements ----disable-interactivity }
 }
-
 # notepad++
 if ($wshell.Popup("Do you want to install Notepad++ ?",0,"Installer",4+32) -eq 6) {
     Start-Job -ScriptBlock { winget install notepadd++.notepad++ -h --accept-package-agreements ----disable-interactivity }
 }
-
 #ADOBE ACROBAT
 if ($wshell.Popup("Do you want to install ADOBE ACROBAT ?",0,"Installer",4+32) -eq 6) {
     Start-Job -ScriptBlock { winget install Adobe.Acrobat.Reader.64-bit -h --accept-package-agreements ----disable-interactivity }
 }
-
 #VLC MEDIA PLAYER
 if ($wshell.Popup("Do you want to install VLC MEDIA PLAYER ?",0,"Installer",4+32) -eq 6) {
     Start-Job -ScriptBlock {  winget install XPDM1ZW6815MQM -h --accept-package-agreements ----disable-interactivity }
 }
-
 # Brave Browser
 if ($wshell.Popup("Do you want to install Brave Browser ?",0,"Installer",4+32) -eq 6) {
     Start-Job -ScriptBlock { winget install brave.brave-h --accept-package-agreements ----disable-interactivity }
 }
-
 # VS CODE
 if ($wshell.Popup("Do you want to install VS CODE ?",0,"Installer",4+32) -eq 6) {
     Start-Job -ScriptBlock { winget install XP9KHM4BK9FZ7Q -h --accept-package-agreements ----disable-interactivity }
 }
-
-
-#ENDNOTE
-if ($wshell.Popup("Do you want to install ENDNOTE ?",0,"Installer",4+32) -eq 6) {
-   
-    Start-Job -ScriptBlock { 
-        #download from https://download.endnote.com/downloads/21/EN21Inst.exe into $PWD
-        Invoke-WebRequest -Uri https://download.endnote.com/downloads/21/EN21Inst.exe -OutFile $PWD\EN21Inst.exe
-        # install
-        Start-Process -FilePath $PWD\EN21Inst.exe
-        # remove the installer
-        Remove-Item $PWD\EN21Inst.exe
-    }
-}
-
 # VESTA
 if ($wshell.Popup("Do you want to install VESTA to the Desktop?",0,"Installer",4+32) -eq 6) {
     Start-Job -ScriptBlock {
@@ -86,17 +62,31 @@ if ($wshell.Popup("Do you want to install VESTA to the Desktop?",0,"Installer",4
 
     }
 }
-
-
 #Google earth pro
 if ($wshell.Popup("Do you want to install Google Earth Pro ?",0,"Installer",4+32) -eq 6) {
     Start-Job -ScriptBlock { winget install Google.EarthPro -h --accept-package-agreements ----disable-interactivity }
 }
-
 #MS OFFICE
 if ($wshell.Popup("Do you want to Install MS OFFICE ? ",0,"Installer",4+32) -eq 6) {
     # MS Office
     $officeJob = Start-Job -ScriptBlock { winget install Microsoft.Office --accept-package-agreements } -Name "Office"
+
+    # Wait for the job to finish
+    Wait-Job -Name "Office"
+
+    #ENDNOTE
+    if ($wshell.Popup("Do you want to install ENDNOTE ?",0,"Installer",4+32) -eq 6) {
+    
+        Start-Job -ScriptBlock { 
+            #download from https://download.endnote.com/downloads/21/EN21Inst.exe into $PWD
+            Invoke-WebRequest -Uri https://download.endnote.com/downloads/21/EN21Inst.exe -OutFile $PWD\EN21Inst.exe
+            # install
+            Start-Process -FilePath $PWD\EN21Inst.exe
+            # remove the installer
+            Remove-Item $PWD\EN21Inst.exe
+        }
+    }
+
 }
     
 
